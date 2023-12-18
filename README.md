@@ -37,6 +37,12 @@ No additional installation is necessary beyond having Python installed on your s
 
 Your contributions are welcome! Feel free to fork this repository, make your changes, and submit a pull request.
 
+## To-Do
+
+- [ ] Handling if content contains key words.
+- [ ] Fast copy to clipboard, like just press enter then the most recent date will be copied to clipboard
+- [ ] Release(first time in my life LOL!)
+
 ## License
 
 This project is under the MIT License.
