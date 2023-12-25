@@ -29,6 +29,7 @@ It allows users to easily search for messages within their exported ChatGPT conv
 - **Python Version**: This tool was developed and tested using Python 3.11
 - **Operating System**: It was run on Windows 11, using Visual Studio Code's integrated terminal.
 - **Python Installation**: Ensure Python is installed on your system to use this tool.
+- **GreasyFork script Setting**: Export JSON in OpenAI Official Format OFF.
 
 ## Installation
 
@@ -43,6 +44,7 @@ Your contributions are welcome! Feel free to fork this repository, make your cha
 - [ ] Handling if content contains key words.
 - [ ] Fast copy to clipboard, like just press enter then the most recent date will be copied to clipboard
 - [x] Release(first time in my life LOL!)
+- [ ] Match JSON in OpenAI Official Format
 
 ## License
 
