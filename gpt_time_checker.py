@@ -15,21 +15,29 @@ def convert_timestamp_to_datetime(timestamp):
 def search_in_json(file_path, search_text):
     matches = []
     error = []  # count the number of errors
+
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
-        for key, value in data['mapping'].items():
+        for key, value in data.get('mapping', {}).items():
             try:  # error handling especially for wrong format json file
-                content = value['message']['content']['parts'][0]
-                if search_text in content:
-                    timestamp = value['message']['create_time']
-                    formatted_date_time = convert_timestamp_to_datetime(
-                        timestamp)
-                    matches.append((content, formatted_date_time))
+                message = value.get('message', {})
+                content = message.get('content', {})
+                parts = content.get('parts', [])
+
+                # loop through parts to find content
+                for part in parts:
+
+                    if search_text in part:
+                        timestamp = message.get('create_time', 0)
+                        formatted_date_time = convert_timestamp_to_datetime(
+                            timestamp)
+                        matches.append((part, formatted_date_time))
             except Exception as e:
                 # append error message with file name
                 error.append(f"{file_path}: {e}")
-                continue
+
     return matches, error
+
 
 # TODO handling if content contains key words. e.g. "message" or "content" or "parts" or "create_time"
 # TODO make fast copy option, like just press enter then the most recent date will be copied to clipboard
