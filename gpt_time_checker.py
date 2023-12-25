@@ -14,17 +14,23 @@ def convert_timestamp_to_datetime(timestamp):
 
 def search_in_json(file_path, search_text):
     matches = []
+    error = []  # count the number of errors
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
         for key, value in data['mapping'].items():
-            if 'message' in value:
+            try:  # error handling especially for wrong format json file
                 content = value['message']['content']['parts'][0]
                 if search_text in content:
                     timestamp = value['message']['create_time']
                     formatted_date_time = convert_timestamp_to_datetime(
                         timestamp)
                     matches.append((content, formatted_date_time))
-    return matches
+            except Exception as e:
+                # append error message with file name
+                error.append(f"{file_path}: {e}")
+                continue
+    return matches, error
+
 # TODO handling if content contains key words. e.g. "message" or "content" or "parts" or "create_time"
 # TODO make fast copy option, like just press enter then the most recent date will be copied to clipboard
 
@@ -60,14 +66,28 @@ def main():
         if not json_files:
             continue
 
+        total_matches = 0
+        total_errors = []  # Grand count the number of errors in all files
+
         for json_file in json_files:
-            matches = search_in_json(json_file, search_text)
-            if matches:
+            matches, error = search_in_json(json_file, search_text)
+
+            if matches:  # print each matches
                 for match in matches:
                     print(f"\n{match[0]}\n\n{match[1]}\n")
+                    total_matches += 1  # Count total number of matches
                 print(f"========================================")
-                if len(matches) > 1:
-                    print("Warning:\nMultiple matches found!\n~~~~~~~~~~~~~~~~~~~~~~~~")
+
+            if len(matches) > 1:
+                print(
+                    f"=========Multiple matches found=========\nTotal found: {total_matches}\n========================================")
+
+            if error:
+                total_errors.append(error)
+
+        if total_errors != []:  # print all errors
+            print(
+                f"=================Error!=================:\n{total_errors}\n========================================")
 
 
 if __name__ == "__main__":
