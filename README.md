@@ -15,6 +15,7 @@ It allows users to easily search for messages within their exported ChatGPT conv
 - **Effortless Timestamp Lookup**: Instantly convert Unix timestamps from exported ChatGPT JSON files to readable date-time formats.
 - **Simple Text Search**: Input a snippet from your ChatGPT conversation and find the exact message along with its timestamp.
 - **Handle Multiple Matches**: If there are multiple matches for your query, the tool will list all, providing a comprehensive view.
+- **File count and size limit**: The tool will not run if the file count is more than 10 or the file size is more than 10MB. You can modify it if you like.
 
 ## Usage
 
@@ -41,7 +42,7 @@ Your contributions are welcome! Feel free to fork this repository, make your cha
 
 - [ ] Handling if content contains key words.
 - [ ] Fast copy to clipboard, like just press enter then the most recent date will be copied to clipboard
-- [ ] Release(first time in my life LOL!)
+- [x] Release(first time in my life LOL!)
 
 ## License
 

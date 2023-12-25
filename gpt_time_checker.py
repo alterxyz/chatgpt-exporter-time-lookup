@@ -29,17 +29,23 @@ def search_in_json(file_path, search_text):
 # TODO handling if content contains key words. e.g. "message" or "content" or "parts" or "create_time"
 # TODO make fast copy option, like just press enter then the most recent date will be copied to clipboard
 
-
-def main():
-    json_files = [f for f in os.listdir('.') if f.endswith('.json')]
+# The getting files if stay in the main function, it can not process the files when some files added during the process.
+def get_json_files():
+    json_files = [f.name for f in os.scandir('.') if f.name.endswith('.json')]
     total_size = sum(os.path.getsize(f) for f in json_files)
 
     if len(json_files) > 10 or total_size > 10 * 1024 * 1024:
-        print("Error:\nToo many JSON files or total size too large. Please reduce the number or size of JSON files. \n Or you may modify the code to handle large files but it may take a long time to search.")
-        sys.exit(1)
+        print("Error:\nToo many JSON files or total size too large. \nPlease reduce the number or size of JSON files. \nOr you may modify the code to handle large files but it may take a long time to search.\n========================================")
+        return []
+    return json_files
+
+
+def main():
+
     print("Enter the text snippet you're searching for!\n(type 'q' or 'Ctrl + c' to quit)\n")
 
     while True:
+
         search_text = input("Search:")
         if search_text.lower() == 'q':
             break
@@ -49,6 +55,10 @@ def main():
             continue
 
         print(f"========================================")
+
+        json_files = get_json_files()
+        if not json_files:
+            continue
 
         for json_file in json_files:
             matches = search_in_json(json_file, search_text)
