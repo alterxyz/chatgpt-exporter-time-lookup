@@ -1,7 +1,6 @@
 import json
 import datetime
 import os
-import sys
 
 
 def convert_timestamp_to_datetime(timestamp):
@@ -29,8 +28,8 @@ def search_in_json(file_path, search_text):
 # TODO handling if content contains key words. e.g. "message" or "content" or "parts" or "create_time"
 # TODO make fast copy option, like just press enter then the most recent date will be copied to clipboard
 
-# The getting files if stay in the main function, it can not process the files when some files added during the process.
-def get_json_files():
+
+def get_json_files():  # get new file list by scandir rather than os.listdir
     json_files = [f.name for f in os.scandir('.') if f.name.endswith('.json')]
     total_size = sum(os.path.getsize(f) for f in json_files)
 
@@ -38,6 +37,7 @@ def get_json_files():
         print("Error:\nToo many JSON files or total size too large. \nPlease reduce the number or size of JSON files. \nOr you may modify the code to handle large files but it may take a long time to search.\n========================================")
         return []
     return json_files
+# The getting files if stay in the main function, it can not process the files when some files added during the process.
 
 
 def main():
