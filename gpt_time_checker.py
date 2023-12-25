@@ -6,8 +6,11 @@ import sys
 
 def convert_timestamp_to_datetime(timestamp):
     datetime_obj = datetime.datetime.utcfromtimestamp(timestamp)
-    # e.g. 2020-12-31 23:59:59
-    return datetime_obj.strftime('%Y-%m-%d %H:%M:%S')
+    '''
+    FYI: 2020-12-31 23:59:59 %Y-%m-%d %H:%M:%S
+    231225_15:57 %y-%m-%d %H:%M:%S
+    '''
+    return datetime_obj.strftime('%y%m%d_%H%M')
 
 
 def search_in_json(file_path, search_text):
